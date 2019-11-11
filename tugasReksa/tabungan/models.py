@@ -4,10 +4,11 @@ from django.db import models
 class User(models.Model):
     userName = models.CharField(primary_key=True, max_length=100)
     fullName = models.CharField(max_length=100)
+    password = models.TextField()
     address  = models.TextField()
     dateReg = models.DateField()
     exp = models.FloatField()
-    level = models.FloatField()    
+    level = models.FloatField()
 
     def __str__(self):
         return self.userName
@@ -17,6 +18,6 @@ class ReksaDana(models.Model):
     price = models.FloatField()
     unitNumber = models.FloatField()
     userName = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return self.name
