@@ -8,7 +8,8 @@
 </head>
 <body>
     <div>
-        <h1>This is the first page of ReksaDana</h1>
+        <h1>{{ request.session.user_name }}</h1>
+        <p><a href="/do_logout">logout</a></p>
     </div>
 </body>
 </html>
