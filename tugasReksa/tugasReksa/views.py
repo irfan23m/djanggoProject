@@ -3,6 +3,7 @@ from django.contrib import auth
 from django.contrib.auth import logout, get_user_model
 from django.http import HttpResponse, HttpResponseRedirect
 from tabungan.models import User, ReksaDana
+from tabungan import forms
 import datetime
 
 def index(request):
@@ -22,9 +23,27 @@ def do_login(request):
 
     if user is not None:
         auth.login(request, user)
-        response = HttpResponseRedirect('/')
-        request.session['user_name'] = user_name
-        return response
+        # response = HttpResponseRedirect('/')
+        # request.session['user_name'] = user_name
+        # return response
+        user = User.objects.get(userName__exact = user_name)
+        reksa = ReksaDana.objects.all().filter(userName__exact= user_name)
+        cash = 0
+
+        for item in reksa:
+            cash += (item.price * item.unitNumber)
+        
+        level = cash / 1000000
+        exp = cash % 1000000
+
+        Dict = {
+            'user'  : user,
+            'reksa' : reksa,
+            'cash'  : cash,
+            'level' : level,
+            'exp'   : exp,
+        }
+        return render(request, 'index.html', context=Dict)
     else:
         return HttpResponse("akun tidak ada")
 
@@ -56,3 +75,32 @@ def do_register(request):
         return response
     else:
         return HttpResponse("akun sudah ada")
+
+def update(request, key):
+    user = User.objects.get(userName__exact=key)
+    form = forms.newUserForm(instance=user)
+    reksa = ReksaDana.objects.all().filter(userName_id=key)
+    cash = 0
+    
+    for item in reksa:
+        cash += (item.price * item.unitNumber)
+    
+    level = cash / 1000000
+    exp = cash % 1000000
+
+    Dict = {
+            'user'  : user,
+            'reksa' : reksa,
+            'cash'  : cash,
+            'level' : level,
+            'exp'   : exp,
+        }
+    if request.method == 'POST':
+        form = forms.newUserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save(commit=True)
+            #return index(request)
+            return render(request, 'index.html', context=Dict)
+        else:
+            print("Validation Error!")
+    return render(request, 'form.html',{'form':form})
