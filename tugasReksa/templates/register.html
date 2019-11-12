@@ -294,10 +294,12 @@
             </div>
 
             <!-- Login Form -->
-            <form>
-
-            <input type="text" id="login" class="fadeIn second" name="login" placeholder="Username" required>
-            <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Harus terdapat setidaknya satu huruf besar, kecil, angka. Panjang password minimum 8 karakter" required>
+            <form action="/do_register/" method="POST">
+            {% csrf_token %}
+            <input type="text" id="login" class="fadeIn second" name="user_name" placeholder="Username" required>
+            <input type="text" id="password" class="fadeIn third" name="user_password" placeholder="Password"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Harus terdapat setidaknya satu huruf besar, kecil, angka. Panjang password minimum 8 karakter" required>
+            <input type="text" class="fadeIn second" name="user_fullname" placeholder="Full Name" required>
+            <input type="text" class="fadeIn second" name="user_address" placeholder="Address" required>
             <input type="submit" class="fadeIn fourth" value="Register">
             </form>
 
