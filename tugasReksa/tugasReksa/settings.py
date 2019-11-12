@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'tugasReksa.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djangocrud',
+        'NAME': 'django',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',

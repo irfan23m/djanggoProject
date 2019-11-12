@@ -26,4 +26,5 @@ urlpatterns = [
     path('do_login/', views.do_login),
     path('do_logout/', views.do_logout),
     path('do_register/', views.do_register),
+    path('update/<str:key>', views.update, name='update'),
 ]

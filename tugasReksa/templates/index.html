@@ -12,8 +12,35 @@
 </head>
 <body>
     <div>
-        <h1>{{ request.session.user_name }}</h1>
+        <h1>Tabungan Reksadana</h1>
+        <p>Profil: </p>
+        <p>username: {{user.userName}}</p>
+        <p>full name: {{user.fullName}}</p>
+        <p>address: {{user.address}}</p>
+        <p>date registered: {{user.dateReg}}</p>
+        <p>cash in hand: {{cash}}</p>
+        <p>exp: {{exp}}</p>
+        <p>level: {{level}}</p>
+        {% if reksa %}        
+        <table border="1px solid black">
+            <tr>
+                <td>Name</td>
+                <td>price</td>
+                <td>unit number</td>
+            </tr>
+            {% for item in reksa %}
+            <tr>
+                <td>{{item.name}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.unitNumber}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No reksadana</p>
+        {% endif %}
         <p><a href="/do_logout">logout</a></p>
+        <p><a href= {% url "update" user.userName %}> Update </a></p>        
     </div>
 </body>
 </html>
