@@ -10,26 +10,28 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <style>
-        
+        ul>li:last-child{
+            float: right;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="row">
-            <div class="col">
+            <div class="col-md-6">
                 <h1>Tabungan Reksadana</h1>
             </div>
-            <div class="col">
+            <div class="col-md-6">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a href="/do_logout">logout</a>
+                        <a class="nav-link" href= {% url "update" user.userName %}> Update Profile </a>
                     </li>&nbsp;
                     <li class="nav-item">
-                        <a href= {% url "update" user.userName %}> Update </a>
+                        <a class="nav-link" href= {% url "beli" user.userName %}> Beli Reksadana </a>
                     </li>&nbsp;
                     <li class="nav-item">
-                        <a href= {% url "beli" user.userName %}> Beli Reksadana </a>
-                    </li>&nbsp;
+                        <a class="nav-link" href="/do_logout">logout</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -39,18 +41,18 @@
             </div>
         </div>
         <div class="row" align="justify">
-            <div class="col-md-6">
-                <p>Username: {{user.userName}}</p>
-                <p>Full Name: {{user.fullName}}</p>
-                <p>Address: {{user.address}}</p>
+            <div class="col-md-3">
+                <p>Username : {{user.userName}}</p>
+                <p>Full Name : {{user.fullName}}</p>
+                <p>Address : {{user.address}}</p>
                 <p>Date Registered: {{user.dateReg}}</p>
             </div>
             <div class="col-md-3">
-                <p>Cash in Hand: {{cash}}</p>
-                <p>Exp: {{exp}}</p>
-                <p>Level: {{level}}</p>
-
+                <p>Cash in Hand : {{cash}}</p>
+                <p>Exp : {{exp}}</p>
+                <p>Level : {{level}}</p>
             </div>
+            <div class="col-md-6"></div>
         </div>
         <div class="row">
             <div class="col"> 
