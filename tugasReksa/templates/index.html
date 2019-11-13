@@ -27,12 +27,14 @@
                 <td>Name</td>
                 <td>price</td>
                 <td>unit number</td>
+                <td></td>
             </tr>
             {% for item in reksa %}
             <tr>
                 <td>{{item.name}}</td>
                 <td>{{item.price}}</td>
                 <td>{{item.unitNumber}}</td>
+                <td><a href= {% url "sell" item.id %}> Sell </a> </td>
             </tr>
             {% endfor %}
         </table>
