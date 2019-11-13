@@ -109,6 +109,34 @@ def update(request, key):
             print("Validation Error!")
     return render(request, 'form.html',{'form':form})
 
+def sell(request, key):
+    reksaSell = ReksaDana.objects.get(id=key)
+    user = User.objects.get(userName__exact = reksaSell.userName)
+    
+    if request.method == 'POST':
+        reksaSell.delete()
+        #return index(request)
+        
+        reksa = ReksaDana.objects.all().filter(userName_id=user.userName)
+        cash = 0
+    
+        for item in reksa:
+            cash += (item.price * item.unitNumber)
+    
+        level = cash / 1000000
+        exp = cash % 1000000
+
+        Dict = {
+            'user'  : user,
+            'reksaSell': reksaSell,
+            'reksa' : reksa,
+            'cash'  : cash,
+            'level' : level,
+            'exp'   : exp,
+        }
+        return render(request, 'index.html', context=Dict)
+    return render(request, 'sell.html', {'reksa':reksaSell, 'user':user})
+    
 def belireksa(request, key):
     user = User.objects.get(userName__exact=key)
     Dict = {
