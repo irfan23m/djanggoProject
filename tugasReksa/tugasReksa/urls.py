@@ -22,10 +22,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',login_required(views.index), name='index'),
     path('login/',views.login),
+    path('index/',views.index),
     path('register/',views.register),
+    path('belireksa/<str:key>', login_required(views.belireksa), name='beli'),
     path('do_login/', views.do_login),
     path('do_logout/', views.do_logout),
     path('do_register/', views.do_register),
+    path('do_belireksa/', views.do_belireksa),
     path('update/<str:key>', login_required(views.update), name='update'),
     path('sell/<str:key>', views.sell, name='sell'),
 ]

@@ -24,28 +24,32 @@ def do_login(request):
     if user is not None:
         auth.login(request, user)
         # response = HttpResponseRedirect('/')
-        # request.session['user_name'] = user_name
+        request.session['user_name'] = user_name
         # return response
-        user = User.objects.get(userName__exact = user_name)
-        reksa = ReksaDana.objects.all().filter(userName__exact= user_name)
-        cash = 0
-
-        for item in reksa:
-            cash += (item.price * item.unitNumber)
-        
-        level = cash / 1000000
-        exp = cash % 1000000
-
-        Dict = {
-            'user'  : user,
-            'reksa' : reksa,
-            'cash'  : cash,
-            'level' : level,
-            'exp'   : exp,
-        }
-        return render(request, 'index.html', context=Dict)
+        response = HttpResponseRedirect('/index')
+        return response
     else:
         return HttpResponse("akun tidak ada")
+
+def index(request):
+    user = User.objects.get(userName__exact = request.session['user_name'])
+    reksa = ReksaDana.objects.all().filter(userName__exact= request.session['user_name'])
+    cash = 0
+
+    for item in reksa:
+        cash += (item.price * item.unitNumber)
+        
+    level = cash / 1000000
+    exp = cash % 1000000
+
+    Dict = {
+        'user'  : user,
+        'reksa' : reksa,
+        'cash'  : cash,
+        'level' : level,
+        'exp'   : exp,
+    }
+    return render(request, 'index.html', context=Dict)
 
 def do_logout(request):
     logout(request)
@@ -132,3 +136,20 @@ def sell(request, key):
         }
         return render(request, 'index.html', context=Dict)
     return render(request, 'sell.html', {'reksa':reksaSell, 'user':user})
+    
+def belireksa(request, key):
+    user = User.objects.get(userName__exact=key)
+    Dict = {
+        'user':user
+    }
+    return render(request, 'beli-reksa.html', context=Dict)
+
+def do_belireksa(request):
+    username = request.POST.get('username','')
+    nama_reksa =  request.POST.get('reksa_name','')
+    unitPrice_reksa = request.POST.get('reksa_unitPrice','')
+    unitNumber_reksa = request.POST.get('reksa_unitNumber','')
+
+    ReksaDana.objects.create(userName_id=username, name=nama_reksa, price=unitPrice_reksa, unitNumber=unitNumber_reksa)
+    response = HttpResponseRedirect('/index')
+    return response
