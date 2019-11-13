@@ -7,8 +7,8 @@ class User(models.Model):
     password = models.TextField()
     address  = models.TextField()
     dateReg = models.DateField()
-    exp = models.FloatField()
-    level = models.FloatField()
+    # exp = models.FloatField()
+    # level = models.FloatField()
 
     def __str__(self):
         return self.userName

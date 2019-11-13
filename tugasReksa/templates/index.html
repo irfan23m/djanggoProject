@@ -9,38 +9,75 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <style>
+        
+    </style>
 </head>
 <body>
-    <div>
-        <h1>Tabungan Reksadana</h1>
-        <p>Profil: </p>
-        <p>username: {{user.userName}}</p>
-        <p>full name: {{user.fullName}}</p>
-        <p>address: {{user.address}}</p>
-        <p>date registered: {{user.dateReg}}</p>
-        <p>cash in hand: {{cash}}</p>
-        <p>exp: {{exp}}</p>
-        <p>level: {{level}}</p>
-        {% if reksa %}        
-        <table border="1px solid black">
-            <tr>
-                <td>Name</td>
-                <td>price</td>
-                <td>unit number</td>
-            </tr>
-            {% for item in reksa %}
-            <tr>
-                <td>{{item.name}}</td>
-                <td>{{item.price}}</td>
-                <td>{{item.unitNumber}}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        {% else %}
-        <p>No reksadana</p>
-        {% endif %}
-        <p><a href="/do_logout">logout</a></p>
-        <p><a href= {% url "update" user.userName %}> Update </a></p>        
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Tabungan Reksadana</h1>
+            </div>
+            <div class="col">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a href="/do_logout">logout</a>
+                    </li>&nbsp;
+                    <li class="nav-item">
+                        <a href= {% url "update" user.userName %}> Update </a>
+                    </li>&nbsp;
+                    <li class="nav-item">
+                        <a href= {% url "beli" user.userName %}> Beli Reksadana </a>
+                    </li>&nbsp;
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>Profil</h3>
+            </div>
+        </div>
+        <div class="row" align="justify">
+            <div class="col-md-6">
+                <p>Username: {{user.userName}}</p>
+                <p>Full Name: {{user.fullName}}</p>
+                <p>Address: {{user.address}}</p>
+                <p>Date Registered: {{user.dateReg}}</p>
+            </div>
+            <div class="col-md-3">
+                <p>Cash in Hand: {{cash}}</p>
+                <p>Exp: {{exp}}</p>
+                <p>Level: {{level}}</p>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row">
+            <div class="col"> 
+                {% if reksa %}  
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <th>Reksadana Name</th>
+                            <th>Unit Price</th>
+                            <th>Unit Number</th>
+                        </thead>
+                        {% for item in reksa %}
+                        <tr>
+                            <td>{{item.name}}</td>
+                            <td>{{item.price}}</td>
+                            <td>{{item.unitNumber}}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>      
+                
+                {% else %}
+                <p>No reksadana</p>
+                {% endif %}
+                   
+            </div>
+        </div>         
     </div>
 </body>
 </html>

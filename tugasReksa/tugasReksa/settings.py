@@ -84,6 +84,7 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
+        'STORAGE_ENGINE': 'MyISAM / INNODB / ETC',
     }
 }
 
