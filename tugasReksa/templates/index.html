@@ -10,75 +10,125 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <style>
-        
+        .nav{
+            padding-top: 10px;
+            padding-left: 146px;
+        }
+        #nav-header{
+            padding-top: 4px;
+            padding-bottom: 15px;
+            background-color: #b6e5fa;
+        }
+        #sub-header{
+            padding-bottom: 4px;
+        }
+        #detail-customer{
+            padding-bottom: 5px;
+        }
+        .label{
+            font-weight: 600;
+        }
     </style>
+    <script>
+        function confirmDelete(id, name) { 
+            var paramName = name;
+            var paramId = id;
+            var r = confirm("Do you really want to sell "+paramName+" ?");
+            if (r == true) {
+                window.location.href="/sell/"+paramId
+            } 
+        }
+    </script>
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col">
+    <div class="container-fluid">
+        <div class="row" id="nav-header">
+            <div class="col-md-6">
                 <h1>Tabungan Reksadana</h1>
             </div>
-            <div class="col">
-                <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <a href="/do_logout">logout</a>
-                    </li>&nbsp;
-                    <li class="nav-item">
-                        <a href= {% url "update" user.userName %}> Update </a>
-                    </li>&nbsp;
-                    <li class="nav-item">
-                        <a href= {% url "beli" user.userName %}> Beli Reksadana </a>
-                    </li>&nbsp;
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <h3>Profil</h3>
-            </div>
-        </div>
-        <div class="row" align="justify">
             <div class="col-md-6">
-                <p>Username: {{user.userName}}</p>
-                <p>Full Name: {{user.fullName}}</p>
-                <p>Address: {{user.address}}</p>
-                <p>Date Registered: {{user.dateReg}}</p>
-            </div>
-            <div class="col-md-3">
-                <p>Cash in Hand: {{cash}}</p>
-                <p>Exp: {{exp}}</p>
-                <p>Level: {{level}}</p>
-
+                <div class="row">
+                    <div class="nav nav-pills">
+                        <a class="nav-link" href="#"> Home </a>
+                        <a class="nav-link" href= {% url "update" user.userName %}> Update Profile </a>  
+                        <a class="nav-link" href= {% url "beli" user.userName %}> Beli Reksadana </a>
+                        <a class="nav-link" href="/do_logout">logout</a>    
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
-            <div class="col"> 
-                {% if reksa %}  
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <th>Reksadana Name</th>
-                            <th>Unit Price</th>
-                            <th>Unit Number</th>
-                        </thead>
-                        {% for item in reksa %}
-                        <tr>
-                            <td>{{item.name}}</td>
-                            <td>{{item.price}}</td>
-                            <td>{{item.unitNumber}}</td>
-                            <td><a href= {% url "sell" item.id %}> Sell </a> </td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </div>      
-                
-                {% else %}
-                <p>No reksadana</p>
-                {% endif %}
-                   
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                    <div class="row" id="sub-header">
+                            <div class="col">
+                                <h4>Profil</h4>
+                            </div>
+                        </div>
+                        <div class="row" id="detail-customer">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-3 label">
+                                        <p>Username</p>
+                                        <p>Full Name</p>
+                                        <p>Date Registered</p>
+                                        <p>Address</p>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <p>: {{user.userName}}</p>
+                                        <p>: {{user.fullName}}</p>
+                                        <p>: {{user.dateReg}}</p>
+                                        <p>: {{user.address}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-3 label">
+                                        <p>Cash in Hand</p>
+                                        <p>Exp</p>
+                                        <p>Level</p>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <p>: {{cash}}</p>
+                                        <p>: {{exp}}</p>
+                                        <p>: {{level}}</p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col"> 
+                                {% if reksa %}  
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th>Reksadana Name</th>
+                                            <th>Unit Price</th>
+                                            <th>Unit Number</th>
+                                            <th>Action</th>
+                                        </thead>
+                                        {% for item in reksa %}
+                                        <tr>
+                                            <td>{{item.name}}</td>
+                                            <td>{{item.price}}</td>
+                                            <td>{{item.unitNumber}}</td>
+                                            <td><button type="button" class="btn btn-danger" id="btn_{{item.id}}" onclick="confirmDelete({{item.id}}, '{{item.name}}')">Sell</button> </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>      
+                                
+                                {% else %}
+                                <p>No reksadana</p>
+                                {% endif %}
+                                   
+                            </div>
+                        </div>
             </div>
-        </div>         
+            <div class="col-md-1"></div>
+        </div>  
     </div>
 </body>
 </html>

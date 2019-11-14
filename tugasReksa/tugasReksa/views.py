@@ -26,10 +26,10 @@ def do_login(request):
         # response = HttpResponseRedirect('/')
         request.session['user_name'] = user_name
         # return response
-        response = HttpResponseRedirect('/index')
+        response = HttpResponseRedirect('/')
         return response
     else:
-        return HttpResponse("akun tidak ada")
+        return render(request, 'login.html',{'message':'Akun tidak ditemukan'})
 
 def index(request):
     user = User.objects.get(userName__exact = request.session['user_name'])
@@ -72,13 +72,13 @@ def do_register(request):
             user.is_active = True
             user.save()
 
-        User.objects.create(userName=user_name, fullName=user_fullname, password='', address=user_address, dateReg=datetime.date.today(), exp=0, level=0)
+        User.objects.create(userName=user_name, fullName=user_fullname, password='', address=user_address, dateReg=datetime.date.today())
 
         response = HttpResponseRedirect('/')
         request.session['user_name'] = user_name
         return response
     else:
-        return HttpResponse("akun sudah ada")
+        return render(request, 'register.html',{'message':'Username sudah digunakan'})
 
 def update(request, key):
     user = User.objects.get(userName__exact=key)
@@ -107,35 +107,13 @@ def update(request, key):
             return render(request, 'index.html', context=Dict)
         else:
             print("Validation Error!")
-    return render(request, 'form.html',{'form':form})
+    return render(request, 'form.html',{'form':form, 'user':user})
 
 def sell(request, key):
     reksaSell = ReksaDana.objects.get(id=key)
-    user = User.objects.get(userName__exact = reksaSell.userName)
-    
-    if request.method == 'POST':
-        reksaSell.delete()
-        #return index(request)
-        
-        reksa = ReksaDana.objects.all().filter(userName_id=user.userName)
-        cash = 0
-    
-        for item in reksa:
-            cash += (item.price * item.unitNumber)
-    
-        level = cash / 1000000
-        exp = cash % 1000000
-
-        Dict = {
-            'user'  : user,
-            'reksaSell': reksaSell,
-            'reksa' : reksa,
-            'cash'  : cash,
-            'level' : level,
-            'exp'   : exp,
-        }
-        return render(request, 'index.html', context=Dict)
-    return render(request, 'sell.html', {'reksa':reksaSell, 'user':user})
+    reksaSell.delete()
+    response = HttpResponseRedirect('/')
+    return response
     
 def belireksa(request, key):
     user = User.objects.get(userName__exact=key)
@@ -151,5 +129,5 @@ def do_belireksa(request):
     unitNumber_reksa = request.POST.get('reksa_unitNumber','')
 
     ReksaDana.objects.create(userName_id=username, name=nama_reksa, price=unitPrice_reksa, unitNumber=unitNumber_reksa)
-    response = HttpResponseRedirect('/index')
+    response = HttpResponseRedirect('/')
     return response

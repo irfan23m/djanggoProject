@@ -280,8 +280,15 @@
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         font-size: 30px;
     }
-
     </style>
+    {% with message as {{message}} %}
+        {% if message %}
+            <script>
+                console.log('{{message}}');
+                alert('{{message}}');
+            </script>
+        {% endif %}
+    {% endwith %}
 </head>
 <body>
     <div class="wrapper fadeInDown">

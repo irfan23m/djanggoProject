@@ -22,7 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',login_required(views.index), name='index'),
     path('login/',views.login),
-    path('index/',views.index),
     path('register/',views.register),
     path('belireksa/<str:key>', login_required(views.belireksa), name='beli'),
     path('do_login/', views.do_login),
