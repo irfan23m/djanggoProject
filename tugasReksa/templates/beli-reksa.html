@@ -4,33 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Beli Reksadana</title>
+    <title>Reksa Dana</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <style>
+        .nav{
+            padding-top: 10px;
+            padding-left: 146px;
+        }
+        #nav-header{
+            padding-top: 4px;
+            padding-bottom: 15px;
+        }
+        #sub-header{
+            padding-bottom: 4px;
+        }
+        /* #detail-customer{
+            padding-bottom: 5px;
+        } */
+        div[class^="row input"]{
+			padding-bottom: 15px;
+		}
+        label{
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
-    <h1>Beli Reksadana</h1>
-    <div>
-        <form action="/do_belireksa/" method="POST">
-            {% csrf_token %}
-            <input type="text" hidden name="username" value="{{user.userName}}"> 
-            <p>
-                <label for="reksa_name"></label>
-                <input type="text" name="reksa_name" id="name" placeholder="Nama Reksadana" required>
-            </p>
-            <p>
-                <label for="reksa_unitPrice"></label>
-                <input type="number" name="reksa_unitPrice" id="unitPrice" placeholder="Unit Price" required>
-            </p>
-            <p>
-                <label for="reksa_unitNumber"></label>
-                <input type="number" name="reksa_unitNumber" id="unitNumber" placeholder="Unit Number" required>
-            </p>
-            <br>
-            <input type="submit" value="Submit">
-        </form>
+    <div class="container">
+        <div class="row" id="nav-header">
+            <div class="col-md-6">
+                <h1>Tabungan Reksadana</h1>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="nav nav-pills">
+                        <a class="nav-link" href="/"> Home </a>
+                        <a class="nav-link" href= {% url "update" user.userName %}> Update Profile </a>
+                        <a class="nav-link" href="#"> Beli Reksadana </a>
+                        <a class="nav-link" href="/do_logout">logout</a>    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="sub-header">
+            <div class="col">
+                <h4>Beli Reksadana</h4>
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <form action="/do_belireksa/" method="POST">
+                        {% csrf_token %}
+                <div class="row input">
+                    <input class="form-control" type="text" hidden name="username" value="{{user.userName}}"> 
+                    <label for="reksa_name">Reksadana Name</label>
+                    <input class="form-control" type="text" name="reksa_name" id="name" placeholder="Nama Reksadana" required>
+                </div>
+                <div class="row input">
+                    <label for="reksa_unitPrice">Unit Price</label>
+                    <input class="form-control" type="number" name="reksa_unitPrice" id="unitPrice" placeholder="Unit Price" required>
+                </div>
+                <div class="row input">
+                    <label for="reksa_unitNumber">Unit Number</label>
+                    <input class="form-control" type="number" name="reksa_unitNumber" id="unitNumber" placeholder="Unit Number" required>
+                </div>
+                <div class="row input">
+                    <input type="submit" value="Submit" class="btn btn-primary">     
+                </div>
+                </form>
+            </div>
+            <div class="col-md-3"></div>
+        </div>         
     </div>
 </body>
 </html>
